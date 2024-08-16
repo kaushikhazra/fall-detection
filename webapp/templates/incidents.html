@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Incidents{% endblock %}
+
+{% block content %}
+<h1>Incidents</h1>
+<div class="thumbnails">
+    {% for thumbnail in thumbnails %}
+        <div class="thumbnail" data-video-src="{{ url_for('static', filename='videos/' ~ thumbnail|replace('.jpg', '.mp4')) }}">
+            <img src="{{ url_for('static', filename='thumbnails/' ~ thumbnail) }}" alt="Video Thumbnail">
+        </div>
+    {% endfor %}
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <video id="video-player" class="modal-content" controls autoplay>
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}

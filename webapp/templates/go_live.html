@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Live Stream{% endblock %}
+
+{% block content %}
+<h1>Live Stream</h1>
+<img src="{{ url_for('routes.live_feed') }}" width="640" height="480">
+{% endblock %}
