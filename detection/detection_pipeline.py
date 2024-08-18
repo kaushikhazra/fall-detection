@@ -1,9 +1,14 @@
 import cv2
 import torch
+import smtplib
 from datetime import datetime
 from nanodet_predictor import Predictor
 from person_detector import PersonDetector
 from nanodet.util import cfg, load_config, Logger
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from email import encoders
 
 #----------- Capture Frame --------------------------#
 video_input = None
@@ -88,8 +93,10 @@ def record_video(frame):
     if video_writer is None:
         creation_date = f"{current_date}-{current_hour}-{current_minute}"
         thumbnail = cv2.resize(frame, thumbnail_size, interpolation=cv2.INTER_AREA)
-        cv2.imwrite(f"../webapp/static/thumbnails/{creation_date}.jpg", thumbnail)  # Save the thumbnail
+        thumbnail_path = f"../webapp/static/thumbnails/{creation_date}.jpg"
+        cv2.imwrite(thumbnail_path, thumbnail)  # Save the thumbnail
         video_writer = cv2.VideoWriter(f"../webapp/static/videos/{creation_date}.mp4", fourcc, 20.0, (640, 480))
+        send_email(thumbnail_path)
     
     current_date_time = f"{current_date}-{current_hour}-{current_minute}"
 
@@ -97,13 +104,72 @@ def record_video(frame):
         video_writer.release()
         creation_date = current_date_time
         thumbnail = cv2.resize(frame, thumbnail_size, interpolation=cv2.INTER_AREA)
-        cv2.imwrite(f"../webapp/static/thumbnails/{creation_date}.jpg", thumbnail)  # Save the thumbnail
+        thumbnail_path = f"../webapp/static/thumbnails/{creation_date}.jpg"
+        cv2.imwrite(thumbnail_path, thumbnail)  # Save the thumbnail
         video_writer = cv2.VideoWriter(f"../webapp/static/videos/{creation_date}.mp4", fourcc, 20.0, (640, 480))
+        send_email(thumbnail_path)
 
     video_writer.write(frame)
 
 
 #----------- Record Video --------------------------#
+
+#----------- Send Email --------------------------#
+smtp_server = 'smtp.office365.com'
+smtp_port = 587
+sender_email = 'kaushik.hazra.uol@outlook.com'
+sender_password = 'k@ush1kh@zr@'
+
+def send_email(image_path):
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = 'kaushik.hazra.uol@outlook.com'
+    msg['Subject'] = '!!URGENT!FALL AT CAM1 LOCATION !!'
+
+    image_cid = 'image1'
+    html_body = f"""
+    <html>
+    <body>
+        <p>Dear User,</p>
+        <p>Incident detected at CAM1 that needs your ATTENTION!</p>
+        <img src="cid:{image_cid}" alt="Clickable Image" style="width:300px;height:auto;">
+        <p>
+        <a href="https://www.example.com">
+            Click here to see the video
+        </a>
+        </p>
+        <p>
+        Thank you,<br/>
+        Fall Detection System
+        </p>
+    </body>
+    </html>
+    """
+
+    msg.attach(MIMEText(html_body, 'html'))
+
+    with open(image_path, 'rb') as img_file:
+        img = MIMEImage(img_file.read(), name='image.jpg')
+        img.add_header('Content-ID', f'<{image_cid}>')
+        msg.attach(img)
+
+    try:
+        print('Sending Email')
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls() 
+        server.login(sender_email, sender_password)
+        
+        text = msg.as_string()
+        server.sendmail(sender_email, msg['To'], text)
+        
+        print('Email sent successfully!')
+    except Exception as e:
+        print(f'Failed to send email: {e}')
+    finally:
+        pass
+        # server.quit()
+
+#----------- Send Email --------------------------#
 
 try:
     while True:
@@ -118,23 +184,23 @@ try:
             print("Movement")
             # Use NenoDet NN to detect fall
             fall_detected = detect_fall(frame)
-            record_video(frame)
             # If fall is detected 
             if fall_detected:
                 print("Fall detected")
                 record_video(frame)
-                # record a 10 sec. video and save it in the file
-                # record_video(frame)
 
             else:
-                print("No fall detected")
+                pass
+                # print("No fall detected")
             # If NO fall detected 
 
                 # Continue
 
         # If no movement detected continue
         else :
-            print("No Movement")
+            pass
+            # print("No Movement")
+            
 
 except KeyboardInterrupt:
     video_input.release()
