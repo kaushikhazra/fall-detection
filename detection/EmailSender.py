@@ -4,7 +4,15 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 
 class EmailSender:
+    '''
+    Class responsible for sending email
+    '''
+
     def __init__(self, smtp_server, smtp_port, sender_email, sender_password, recipient_email):
+        '''
+        Constructor that is responsible 
+        for initializing the email client
+        '''
         self.smtp_server = smtp_server
         self.smtp_port = smtp_port
         self.sender_email = sender_email
@@ -12,6 +20,12 @@ class EmailSender:
         self.recipient_email = recipient_email
 
     def send_email(self, image_path):
+        '''
+        Sends the email
+        '''
+
+        # The sender, receiver, subject 
+        # and body configuration
         msg = MIMEMultipart()
         msg['From'] = self.sender_email
         msg['To'] = self.recipient_email
@@ -39,11 +53,13 @@ class EmailSender:
 
         msg.attach(MIMEText(html_body, 'html'))
 
+        # Attach the image of the fall
         with open(image_path, 'rb') as img_file:
             img = MIMEImage(img_file.read(), name='image.jpg')
             img.add_header('Content-ID', f'<{image_cid}>')
             msg.attach(img)
 
+        # Send email
         try:
             print('Sending Email')
             server = smtplib.SMTP(self.smtp_server, self.smtp_port)

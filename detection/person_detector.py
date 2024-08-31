@@ -1,9 +1,24 @@
 class PersonDetector:
+    '''
+    The person detector class.
+    This class is responsible for 
+    detecting if the person is at upright
+    position or lying down
+    '''
     def __init__(self) -> None:
         pass
 
     def detect(self, model_inference, score_thres):
-        # Iterate over each detection for the current class ID
+        '''
+        Detects if the person is at upright position
+        of lying down.
+
+        If the width of the bounding box is higher
+        than the height of the bounding box, then 
+        the person is lying down. Otherwise they
+        are standing or seating
+        '''
+        # Iterate over each detection
         sum_ratio = 0
         count = 0
         for detection in model_inference[0][0]:
