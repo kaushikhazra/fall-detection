@@ -1,17 +1,27 @@
 import cv2
 
 class VideoCapture:
+    '''
+    Class that captures a frame using 
+    OpenCV
+    '''
     def __init__(self):
         self.video_input = None
 
     def capture_frame(self):
+        '''
+        This method captures a frame from the
+        camera using OpenCV Video Capture
+        '''
         if self.video_input is None:
+            # The 0 represents the camera
             self.video_input = cv2.VideoCapture(0)
 
         if not self.video_input.isOpened():
             print('Error: Could not open camera.')
             return None
         else:
+            # Reads the frame from video device
             ret, frame = self.video_input.read()
             if not ret:
                 print('Error: Could not read frame.')
@@ -19,6 +29,9 @@ class VideoCapture:
             return frame
 
     def release(self):
+        '''
+        Releases the camera stream
+        '''
         if self.video_input is not None:
             self.video_input.release()
             self.video_input = None

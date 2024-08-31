@@ -4,7 +4,17 @@ from person_detector import PersonDetector
 from nanodet.util import cfg, load_config, Logger
 
 class FallDetector:
+    '''
+    Class responsible for detecting fall
+    '''
     def __init__(self, config_path='nanodet_m.yml', model_path='nanodet_m.ckpt', score_threshold=0.35):
+        '''
+        Constructor setting up the NanoDet
+        
+        In this class, I am using nanodet_m configuration and model
+        The person detection confidence score threshold is set to 0.35
+
+        '''
         self.predictor = None
         self.detector = None
         self.config_path = config_path
@@ -12,6 +22,9 @@ class FallDetector:
         self.score_threshold = score_threshold
 
     def initialize_predictor(self):
+        '''
+        Initializes the neural network predictor
+        '''
         # Load configuration and initialize the predictor
         load_config(cfg, self.config_path)
         logger = Logger(-1, use_tensorboard=False)
@@ -19,15 +32,21 @@ class FallDetector:
         self.predictor = Predictor(cfg, self.model_path, logger, device=device)
 
     def initialize_detector(self):
+        '''
+        Initializes the person detector
+        '''
         # Initialize the person detector
         self.detector = PersonDetector()
 
     def detect_fall(self, frame):
-        # Initialize predictor if not already initialized
+        '''
+        Detects fall
+        '''
+        # Initialize NanoDet predictor if not already initialized
         if self.predictor is None:
             self.initialize_predictor()
 
-        # Initialize detector if not already initialized
+        # Initialize person detector if not already initialized
         if self.detector is None:
             self.initialize_detector()
 

@@ -2,6 +2,16 @@ import cv2
 from datetime import datetime, timedelta
 
 class VideoRecorder:
+    '''
+    This class takes a frame and
+    saves it in a file. It does that till
+    the duration specified in recording_duration.
+
+    This class does not block the ongoing pipeline
+    it signals the pipeline when the duration is up
+    and the pipeline can stop directing the frames to
+    the video recorder
+    '''
     def __init__(self, recording_duration=30, video_resolution=(640, 480), thumbnail_size=(150, 150)):
         self.fourcc = cv2.VideoWriter_fourcc(*'avc1')
         self.recording_duration = recording_duration
