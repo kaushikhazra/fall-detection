@@ -1,4 +1,4 @@
-# fall-detection
+# Fall Detection Using Computer Vision
 
 ## Introduction
 
