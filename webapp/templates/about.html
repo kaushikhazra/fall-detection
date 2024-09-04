@@ -4,5 +4,79 @@
 
 {% block content %}
 <h1>About This Project</h1>
-<p>This is the Final Project for the BSc. Computer Science course from University of London </p>
+<h2>Fall Detection System</h2>
+<p>
+    <i>A BSc. Computer Science Final Project for University of London</i>
+</p>
+
+<p>
+    According to the World Health Organization, falling-related injuries are a 
+    significant problem worldwide. An estimated 684 thousand people die from falls globally, 
+    of which 80% are in low and middle-income countries
+</p>
+
+<p>
+    The above numbers can be significantly reduced if we can detect 
+    the fall in time and provide medical attention to the victim. 
+    However, it is very hard to predict when and where a person will 
+    fall and if there will be any person to aid with the incident. 
+    To solve this problem, many solutions have been proposed to automatically 
+    detect a fall and alert the necessary people to avoid fatality.
+</p>
+
+<p>
+    There are many such fall detection systems available in the market, 
+    like bracelets, belts, pendants, and many more, that can be used to 
+    efficiently detect a fall. However, they come with their own problems, 
+    like privacy invasion issues or discomfort from wearing them. On the 
+    other hand, there are many solutions available for camera-based home 
+    security, and they all perform quite well in detecting moving objects, 
+    but detecting falls is available in very limited systems.
+</p>
+
+<p>
+    My idea is to build a non-invasive fall detection system that is 
+    available as a part of a camera-based home security solution.
+</p>
+
+<p>
+    The final product will be a camera-based system that can monitor a closed space, 
+    like a room, corridor, or an office space, detect movement, and detect the fall 
+    of a person that occurs in the observed zone. The system will be capable of 
+    sending alerts when a fall happens and recording the video of the fall.
+</p>
+
+<p>
+    For this project, I have planned to use an infrared camera. An infrared camera 
+    will enable the solution to see in low light conditions.
+</p>
+
+<p>
+    I have decided to build the solution on a Raspberry Pi 4B platform. 
+    This will give me enough computing power to run a neural network that can detect falls.
+</p>
+
+<p>
+    In this project, I have decided to use the user’s home Wi-Fi network to 
+    communicate any information, like alerts or viewing an incident using an 
+    onboard web application. For communication, I had the choice of using cell 
+    phone-based technology, like a USB 4G dongle. However, Raspberry Pi 4B 
+    comes with a built-in Wi-Fi adapter, which I have used for the wireless 
+    network and took advantage of the built-in feature.
+</p>
+
+<p>
+    I have decided to build this solution entirely using Python. There are 
+    two reasons why I chose Python: first, any Raspberry Pi is well capable 
+    of running Python applications, and second, most of the machine learning 
+    algorithms are available in Python.
+</p>
+
+<p>
+    For the fall detection, I will use OpenCV as a computer vision framework 
+    because it has many built-in libraries that can reduce my effort. For the 
+    user interface, I will use Flask. This framework can be used in an embedded 
+    environment like Raspberry Pi to show a web UI.
+</p>
+
 {% endblock %}
