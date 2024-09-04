@@ -10,7 +10,7 @@ class DetectionPipeline():
     responsible for running detection workflow
     '''
 
-    def __init__(self):
+    def __init__(self, video_file):
         '''
         Constructor setting up video capture, movement
         detection, fall detection, video recorder and
@@ -21,8 +21,11 @@ class DetectionPipeline():
 
         Email sender is configured to send email to the same
         account.
+
+        The argument video_file can be set to perform test
+        using this detection pipeline
         '''
-        self.video_capture = VideoCapture()
+        self.video_capture = VideoCapture(video_file)
         self.movement_detector = MovementDetector()
         self.fall_detector = FallDetector()
         self.video_recorder = VideoRecorder(recording_duration=10)
@@ -42,8 +45,14 @@ class DetectionPipeline():
         The method that starts the workflow
         '''
         try:
-            while True:
-                self.capture_video()
+            while self.capture_video():
+                pass
+
+            if self.recording_video:
+                self.recording_video = False
+                self.video_recorder.finalize()
+                self.send_email()
+                
         except KeyboardInterrupt:
             self.video_capture.release()
             
@@ -58,10 +67,15 @@ class DetectionPipeline():
         the movement detection step is called
         '''
         self.frame = self.video_capture.capture_frame()
+        if self.frame is None:
+            return False
+        
         if not self.recording_video:
             self.detect_movement()
         else :
             self.record_video()
+
+        return True
 
     
     def detect_movement(self):

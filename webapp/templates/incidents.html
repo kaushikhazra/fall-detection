@@ -8,6 +8,7 @@
     {% for thumbnail in thumbnails %}
         <div class="thumbnail" data-video-src="{{ url_for('static', filename='videos/' ~ thumbnail|replace('.jpg', '.mp4')) }}">
             <img src="{{ url_for('static', filename='thumbnails/' ~ thumbnail) }}" alt="Video Thumbnail">
+            <p>{{ thumbnail|replace('.jpg', '') }}</p> <!-- Display the name of the file below the thumbnail -->
         </div>
     {% endfor %}
 </div>

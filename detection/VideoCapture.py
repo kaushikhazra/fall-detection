@@ -5,8 +5,9 @@ class VideoCapture:
     Class that captures a frame using 
     OpenCV
     '''
-    def __init__(self):
+    def __init__(self, video_file):
         self.video_input = None
+        self.video_file = video_file       
 
     def capture_frame(self):
         '''
@@ -14,10 +15,14 @@ class VideoCapture:
         camera using OpenCV Video Capture
         '''
         if self.video_input is None:
-            # The 0 represents the camera
-            self.video_input = cv2.VideoCapture(0)
+            if self.video_file is not None:
+                print('Reading from file ' + self.video_file)
+                self.video_input = cv2.VideoCapture(self.video_file)
+            else:
+                # The 0 represents the camera
+                self.video_input = cv2.VideoCapture(0)
 
-        if not self.video_input.isOpened():
+        if not self.video_input.isOpened() and self.video_file is None:
             print('Error: Could not open camera.')
             return None
         else:

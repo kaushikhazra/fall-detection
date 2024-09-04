@@ -7,6 +7,10 @@ body {
     flex-direction: column; /* Added to support top banner */
 }
 
+p {
+    color: grey; 
+}
+
 .top-banner {
     width: 100%;
     background-color: #444;
@@ -53,15 +57,22 @@ body {
 
 .thumbnail {
     width: 200px; /* Thumbnail width similar to YouTube */
-    height: 112px; /* Aspect ratio of 16:9 */
-    overflow: hidden;
     cursor: pointer;
+    text-align: center; /* Center the text below the image */
 }
 
 .thumbnail img {
     width: 100%;
-    height: 100%;
+    height: 112px; /* Fixed height to maintain aspect ratio */
     object-fit: cover;
+    display: block;
+    margin-bottom: 5px; /* Space between image and text */
+}
+
+.thumbnail p {
+    margin: 0;
+    padding: 5px 0;
+    font-size: 14px; /* Adjust font size as needed */
 }
 
 /* Modal styles */
@@ -107,3 +118,4 @@ body {
     width: 100%;
     height: auto;
 }
+
