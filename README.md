@@ -66,7 +66,15 @@ python main.py
 
 This will start the fall detection process. Ensure that the video input (e.g., from a camera or video file) is correctly configured in the code.
 
-### 2. To Run the Web Application:
+### 2. To Run the automatic test:
+The fall detection system is located inside the `detection` folder. Navigate to this folder and run the `main.py` script:
+
+```bash
+cd detection
+python test.py
+```
+
+### 3. To Run the Web Application:
 The web app is located inside the `webapp` folder. Navigate to this folder and run the `app.py` script:
 
 ```bash
@@ -75,7 +83,6 @@ python app.py
 ```
 
 The web app will start, and you can access it via your web browser at `http://127.0.0.1:5000/` or another port as configured.
-
 
 ## Contributing
 If you wish to contribute to the project, feel free to submit a pull request or report issues via GitHub.
