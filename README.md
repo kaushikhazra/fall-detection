@@ -66,8 +66,8 @@ python main.py
 
 This will start the fall detection process. Ensure that the video input (e.g., from a camera or video file) is correctly configured in the code.
 
-### 2. To Run the automatic test:
-The fall detection system is located inside the `detection` folder. Navigate to this folder and run the `main.py` script:
+### 2. To Run the Automatic Test:
+Navigate to `detection` folder and run the `test.py` script:
 
 ```bash
 cd detection
